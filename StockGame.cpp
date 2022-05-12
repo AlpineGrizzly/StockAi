@@ -9,49 +9,62 @@
 #include <iostream>
 #include <string>
 #include "stock.h"
+#include "Investor.h"
 using namespace std;
 
-int main()
-{
-    const int numStocks = 4; 
-    int playerBal = 500; 
-    Stock stock1("ball", 5.34);
-    Stock stock2("Tesla", 6.75);
-    Stock stock3("Apple", 1.12);
-    Stock stock4("Google", 500.23);
-    
-    Stock Ledger[4] = { stock1, stock2, stock3, stock4};
-    //Figure out how to get ledger, maybe create another class, singly linked list with all stocks connected, hash map?
+void printMarket(Stock ledger[], int size, Investor player) {
+    printf("----------- Stock Market ---------\n");
+    for (int i = 0; i < size; i++) {
+        printf("%s %.2lf \n", ledger[i].getName().c_str(), ledger[i].getPrice());
+    }
+    printf("Player Balance : %.2lf \n", player.getMoney());
+}
 
-
-    printMarket(stockNames, stockPrices, playerBal);
+//Query for the stock the player would like to invest in
+string getstockName(Stock ledger[], Investor player, int numStocks) { //ideally would like to past ledger object so i dont have to pass number of stocks
     string invStock;
     bool found = false;
     while (found) {
-        printf("------------------------------------ \n What stock would you like to invest in? : ");
+        printf("------------------------------------ \n Hello %s, What stock would you like to invest in? : ", player.getName().c_str());
         cin >> invStock;
         for (int j = 0; j < numStocks; j++) {
-            if (invStock.compare(stockNames[j]) == 0) {
+            if (invStock.compare(ledger[j].getName()) == 0) {
                 printf("Transaction Successful!\n");
                 found = true;
             }
         }
-        printf("That stock does not exist!: %s is not %s\n");
+        printf("That stock does not exist!\n");
     }
+    return invStock;
+}
+
+//Query for the ammount of stocks the player would like
+int getnumStock(Investor player) {
     printf("How many shares? : ");
     int invAmount = 0;
     cin >> invAmount;
     //Can player buy that many?
     cout << "----------- End of Market -------------\n ";
-    
-    return 0;
+    return invAmount;
 }
+int main()
+{
+    //Initialization of stocks and ledger
+    //Need to create ledger class that holds all the stocks (singly linked list of all the stocks
+    //Should be able to return size for each element added so I don't have to pass it in
+    const int numStocks = 4; 
+    Investor player("Player", 500.00);
+    Stock stock1("ball", 5.34);
+    Stock stock2("Tesla", 6.75);
+    Stock stock3("Apple", 1.12);
+    Stock stock4("Google", 500.23); //Maybe add a function that reads these in from a file and creates them and adds to ledger
+    Stock ledger[numStocks] = {stock1, stock2, stock3, stock4}; //Create a ledger item?
+    //Figure out how to get ledger, maybe create another class, singly linked list with all stocks connected, hash map?
 
-void printMarket(string stockNames[], float stockPrices[], double playerBal) {
-    printf("----------- Stock Market ---------\n");
-    for (int i = 0; i < stockNames->size(); i++) {
-        printf("%s : %.2lf \n", stockNames[i].c_str(), stockPrices[i]);
-    }
-    printf("Player Balance : %d \n", playerBal);
+    printMarket(ledger, numStocks, player);
+    string stockName = getstockName(ledger, player, numStocks);
+    int stockNum = getnumStock(player);
+    printf("%s purchased %d stocks of %s\n", player.getName().c_str(), stockNum, stockName.c_str());
+    return 0;
 }
 

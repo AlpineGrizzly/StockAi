@@ -12,5 +12,9 @@ public:
     Stock(string name, double price);
     void setPrice(double newPrice);
     double getPrice();
+    void setName(string newName);
+    string getName();
 };
+
+
 

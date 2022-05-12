@@ -12,5 +12,9 @@ class Investor
         //Stock ownedStocks;
     public:
         Investor(string name, double numMoney);
+        void setName(string newName);
+        string getName();
+        void setMoney(double newMoney);
+        double getMoney();
 };
 

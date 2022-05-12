@@ -19,3 +19,11 @@ void Stock::setPrice(double newPrice) {
 double Stock::getPrice() {
     return this->price;
 }
+
+void Stock::setName(string newName) {
+    this->name = newName;
+}
+
+string Stock::getName() {
+    return this->name;
+}
