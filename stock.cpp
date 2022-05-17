@@ -7,6 +7,11 @@ Stock::Stock(string name, double price) {
     this->price = price;
 }
 
+Stock::Stock() {
+    this->name = "";
+    this->price = 0;
+}
+
 void Stock::setPrice(double newPrice) {
     if (this->price > 0) {
         this->price = newPrice;
